@@ -1,0 +1,105 @@
+.board {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  max-width: 750px;
+  min-height: 100px;
+  background-color: #fff;
+  margin: 0 auto;
+  margin-top: 50px;
+  border: 1px solid #ebeff0;
+  border-radius: 3px;
+  color: #313b3d;
+  box-sizing: border-box;
+  header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid #ebeff0;
+    line-height: 60px;
+
+    h1 {
+      margin: 10px 0 0 30px;
+      font-size: 20px;
+      color: #313b3d;
+      font-weight: 400;
+    }
+
+    input {
+      margin: 20px 30px;
+      border-radius: 25px;
+      font-size: 14px;
+      padding: 0 20px;
+      border: none;
+      background: #f2f6f7;
+      color: #313b3d;
+      width: 45%;
+      height: 40px;
+      outline: none;
+      background-image: url(../../theme/assets/search.png);
+      background-repeat: no-repeat;
+      background-position: 90% 50%;
+    }
+  }
+  ::-webkit-input-placeholder {color:#aebcc0;;}
+  ::-moz-placeholder          {color:#aebcc0;;}
+  :-ms-input-placeholder      {color:#aebcc0;;}
+  .taskItems {
+    width: 100%;
+  }
+  .newTask {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid #ebeff0;
+    line-height: 60px;
+    input {
+      margin: 20px 20px 20px 30px;
+      border-radius: 25px;
+      font-size: 14px;
+      padding: 0px 20px;
+      border: none;
+      background: #f2f6f7;
+      width: 75%;
+      height: 40px;
+      outline: none;
+      color: #313b3d;
+
+    }
+    button {
+      width: 140px;
+      height: 40px;
+      background-color: #1398ff;
+      background-image: url(../../theme/assets/add.png);
+      background-repeat: no-repeat;
+      background-position: 22% 50%;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      padding-left: 35px;
+      margin-right: 30px;
+      color: #d4f0fa;
+      cursor: pointer;
+    }
+  }
+  .example-enter {
+    opacity: 0.01;
+  }
+
+  .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+  }
+
+  .example-leave {
+    opacity: 1;
+  }
+
+  .example-leave.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+  }
+}
