@@ -1,31 +1,35 @@
 // Core
 import React, { Component } from 'react';
+import { fromTo } from 'gsap';
+import { Transition, TransitionGroup } from 'react-transition-group';
 
 // Instruments
 import Task from '../../components/Task';
 import Styles from './styles';
-const taskArr = [];
 
 export default class Board extends Component {
     state = {
-        tasks:       taskArr,
+        tasks:       ['123', 'abc', 'dcsdc'],
+        searchTasks: [],
         taskItem:    '',
-        filterTasks: {}
+        taskChange:  true,
+        tempTasks:   []
     };
     add = (text) => {
-        const arr = taskArr;
+        const { tasks } = this.state;
+        const arr = tasks;
 
         arr.push(text);
         this.setState({ tasks: arr });
     };
     deleteBlock = (i) => {
-        const arr = taskArr;
-
-        arr.splice(i, 1);
-        this.setState({ tasks: arr });
+        this.setState(({ tasks }) => ({
+            tasks: tasks.filter((task, index) => i !== index)
+        }));
     };
     updateText = (text, i) => {
-        const arr = taskArr;
+        const { tasks } = this.state;
+        const arr = tasks;
 
         arr[i] = text;
         this.setState({ tasks: arr });
@@ -35,24 +39,18 @@ export default class Board extends Component {
 
         this.setState(() => ({ taskItem }));
     };
-    eachTask = (item, i) => (
-        <Task
-            deleteBlock = { this.deleteBlock }
-            index = { i }
-            key = { i }
-            update = { this.updateText }>
-            {item}
-        </Task>
-    );
 
     addTaskList = () => {
-        const { taskItem } = this.state;
+        const { taskItem, tasks } = this.state;
 
         if (!taskItem) {
             return;
         }
-        this.add(taskItem);
-        this.setState(() => ({ taskItem: '' }));
+
+        this.setState(() => ({
+            tasks:    [...tasks, taskItem],
+            taskItem: ''
+        }));
     };
     handleKeyPress = (event) => {
         const enterKey = event.key === 'Enter';
@@ -65,21 +63,91 @@ export default class Board extends Component {
     };
 
     handleSearch = (event) => {
-        const { tasks } = this.state;
-        const searchTask = event.target.value.toLowerCase();
-        const displayedTasks = tasks.filter((el) => {
-            const searchValue = el.toLowerCase();
+        const { tasks, taskChange, tempTasks } = this.state;
+        const { value } = event.target;
 
-            return searchValue.indexOf(searchTask) !== -1;
+        const searchTasks = tasks.filter((task) => {
+            if (!value) {
+                this.setState({ taskChange: false });
+
+                return true;
+            }
+            this.setState({ taskChange: true });
+
+            return task.indexOf(value) !== -1;
         });
 
-        this.setState({
-            tasks: displayedTasks
-        });
+        if (taskChange) {
+            this.setState({ tasks: searchTasks });
+        }
+
+        // this.setState({ tasks: tempTasks });
+    };
+
+    handleTaskAppear = (task) => {
+        fromTo(
+            task,
+            1,
+            {
+                y:         10,
+                x:         0,
+                opacity:   0.1,
+                rotationY: 0,
+                rotationX: 0,
+                scale:     0.7
+            },
+            {
+                y:         0,
+                x:         0,
+                opacity:   1,
+                rotationY: 0,
+                rotationX: 0,
+                scale:     1
+            }
+        );
+    };
+
+    handleTaskDisappear = (task) => {
+        fromTo(
+            task,
+            1,
+            {
+                y:         0,
+                x:         0,
+                opacity:   1,
+                rotationY: 0,
+                rotationX: 0,
+                scale:     1
+            },
+            {
+                y:         10,
+                x:         0,
+                opacity:   0.1,
+                rotationY: 0,
+                rotationX: 0,
+                scale:     0.7
+            }
+        );
     };
 
     render () {
         const { taskItem } = this.state;
+        const tasks = this.state.tasks.map((task, i) => (
+            <Transition
+                appear
+                in = { this.state.remove }
+                key = { task }
+                timeout = { 1000 }
+                onEnter = { this.handleTaskAppear }
+                onExit = { this.handleTaskDisappear }>
+                <Task
+                    deleteBlock = { this.deleteBlock }
+                    index = { i }
+                    update = { this.updateText }>
+                    {task}
+                </Task>
+            </Transition>
+        ));
 
         return (
             <div className = { Styles.board }>
@@ -94,7 +162,7 @@ export default class Board extends Component {
                 </header>
 
                 <div className = { Styles.taskItems }>
-                    {this.state.tasks.map(this.eachTask)}
+                    <TransitionGroup>{tasks}</TransitionGroup>
                 </div>
 
                 <div className = { Styles.newTask }>
