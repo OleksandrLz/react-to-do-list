@@ -9,7 +9,7 @@ import Styles from './styles';
 
 export default class Board extends Component {
     state = {
-        tasks:       ['123', 'abc', 'dcsdc'],
+        tasks:       ['task1', 'task2', 'task3'],
         searchTasks: [],
         taskItem:    '',
         taskChange:  true,
