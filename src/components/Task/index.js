@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Instruments
-import Styles from './styles';
+import Styles from './styles.scss';
 import { string, func, number } from 'prop-types';
 
 export default class Task extends Component {

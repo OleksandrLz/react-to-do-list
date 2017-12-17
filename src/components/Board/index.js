@@ -5,7 +5,7 @@ import { Transition, TransitionGroup } from 'react-transition-group';
 
 // Instruments
 import Task from '../../components/Task';
-import Styles from './styles';
+import Styles from './styles.scss';
 
 export default class Board extends Component {
     state = {
