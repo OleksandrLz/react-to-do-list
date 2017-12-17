@@ -13,7 +13,7 @@ export default class Board extends Component {
         searchTasks: [],
         taskItem:    '',
         taskChange:  true,
-        tempTasks:   []
+        filter:      ''
     };
     add = (text) => {
         const { tasks } = this.state;
@@ -37,6 +37,7 @@ export default class Board extends Component {
     handleTextAreaChange = (event) => {
         const { value: taskItem } = event.target;
 
+        console.log(taskItem);
         this.setState(() => ({ taskItem }));
     };
 
@@ -63,25 +64,9 @@ export default class Board extends Component {
     };
 
     handleSearch = (event) => {
-        const { tasks, taskChange, tempTasks } = this.state;
-        const { value } = event.target;
+        const { value: filter } = event.target;
 
-        const searchTasks = tasks.filter((task) => {
-            if (!value) {
-                this.setState({ taskChange: false });
-
-                return true;
-            }
-            this.setState({ taskChange: true });
-
-            return task.indexOf(value) !== -1;
-        });
-
-        if (taskChange) {
-            this.setState({ tasks: searchTasks });
-        }
-
-        // this.setState({ tasks: tempTasks });
+        this.setState({ filter });
     };
 
     handleTaskAppear = (task) => {
@@ -131,23 +116,25 @@ export default class Board extends Component {
     };
 
     render () {
-        const { taskItem } = this.state;
-        const tasks = this.state.tasks.map((task, i) => (
-            <Transition
-                appear
-                in = { this.state.remove }
-                key = { task }
-                timeout = { 1000 }
-                onEnter = { this.handleTaskAppear }
-                onExit = { this.handleTaskDisappear }>
-                <Task
-                    deleteBlock = { this.deleteBlock }
-                    index = { i }
-                    update = { this.updateText }>
-                    {task}
-                </Task>
-            </Transition>
-        ));
+        const { taskItem, filter } = this.state;
+        const tasks = this.state.tasks
+            .filter((task) => task.indexOf(filter) !== -1)
+            .map((task, i) => (
+                <Transition
+                    appear
+                    in = { this.state.remove }
+                    key = { task }
+                    timeout = { 1000 }
+                    onEnter = { this.handleTaskAppear }
+                    onExit = { this.handleTaskDisappear }>
+                    <Task
+                        deleteBlock = { this.deleteBlock }
+                        index = { i }
+                        update = { this.updateText }>
+                        {task}
+                    </Task>
+                </Transition>
+            ));
 
         return (
             <div className = { Styles.board }>
