@@ -21,13 +21,11 @@ describe('Task component', () => {
     test(`should have 2 'button' elements`, () => {
         expect(result.find('button')).toHaveLength(2);
     });
-
-    test(`should have 1 element with class 'Edit'`, () => {
-        expect(result.find('.edit')).toHaveLength(1);
-    });
-
     test(`should have 1 element with class 'Remove'`, () => {
         expect(result.find('.remove')).toHaveLength(1);
+    });
+    test(`should have 1 element with class 'Edit'`, () => {
+        expect(result.find('.edit')).toHaveLength(1);
     });
 
     test(`should respond to state change properly`, () => {
