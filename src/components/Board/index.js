@@ -9,7 +9,7 @@ import Styles from './styles.scss';
 
 export default class Board extends Component {
     state = {
-        tasks:       ['task1', 'task2', 'task3'],
+        tasks:       ['task №1', 'task №2', 'task №3'],
         searchTasks: [],
         taskItem:    '',
         taskChange:  true,
@@ -37,7 +37,6 @@ export default class Board extends Component {
     handleTextAreaChange = (event) => {
         const { value: taskItem } = event.target;
 
-        console.log(taskItem);
         this.setState(() => ({ taskItem }));
     };
 
