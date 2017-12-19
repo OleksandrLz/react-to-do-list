@@ -11,6 +11,7 @@ const mutatedState = {
     edit:   true,
     remove: false
 };
+
 const result = shallow(<Task />);
 
 describe('Task component', () => {
@@ -24,12 +25,19 @@ describe('Task component', () => {
         expect(result.find('.edit')).toHaveLength(1);
     });
 
-    test(`should respond to state change properly`, () => {
+    test(`component state and input value should reflect according changes'`, () => {
         result.setState(() => ({
             edit:   true,
             remove: false
         }));
+
         expect(result.state()).toEqual(mutatedState);
-        expect(result.find('.save')).toHaveLength(1);
+
+        result.find('.task > input').simulate('change', {
+            target: {
+                value: ''
+            }
+        });
+        expect(result.find('.task > input').text()).toBe('');
     });
 });

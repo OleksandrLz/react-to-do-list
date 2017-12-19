@@ -71,7 +71,7 @@ export default class Board extends Component {
     handleTaskAppear = (task) => {
         fromTo(
             task,
-            1,
+            0.8,
             {
                 y:         10,
                 x:         0,
@@ -94,7 +94,7 @@ export default class Board extends Component {
     handleTaskDisappear = (task) => {
         fromTo(
             task,
-            1,
+            0.8,
             {
                 y:         0,
                 x:         0,
@@ -123,7 +123,7 @@ export default class Board extends Component {
                     appear
                     in = { this.state.remove }
                     key = { task }
-                    timeout = { 1000 }
+                    timeout = { 800 }
                     onEnter = { this.handleTaskAppear }
                     onExit = { this.handleTaskDisappear }>
                     <Task
