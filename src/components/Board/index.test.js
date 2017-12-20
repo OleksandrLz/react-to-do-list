@@ -25,7 +25,7 @@ describe('Board component', () => {
         expect(result.state().taskItem).toEqual(mutatedState.taskItem);
     });
 
-    test(`should have 2 'input' element`, () => {
+    test(`should have 2 'input' elements`, () => {
         expect(result.find('input')).toHaveLength(2);
     });
 
@@ -67,5 +67,9 @@ describe('Board component', () => {
     test(`should show h1 item`, () => {
         expect(result.find('h1')).toHaveLength(1);
         expect(result.find('h1').html()).toEqual('<h1>To Do List</h1>');
+    });
+
+    test(`in test mode should have 4 'remove' elements`, () => {
+        expect(result.find('.remove').length).toEqual(4);
     });
 });

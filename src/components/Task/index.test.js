@@ -4,6 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { shallow } from 'enzyme';
 
 import Task from './';
+import { func, number, string } from 'prop-types';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -11,8 +12,11 @@ const mutatedState = {
     edit:   true,
     remove: false
 };
+const props = {
+    deleteBlock: jest.fn()
+};
 
-const result = shallow(<Task />);
+const result = shallow(<Task { ...props } />);
 
 describe('Task component', () => {
     test(`should have 2 'button' elements`, () => {
@@ -38,6 +42,20 @@ describe('Task component', () => {
                 value: ''
             }
         });
+
         expect(result.find('.task > input').text()).toBe('');
+    });
+
+    test(`button 'save' after click on it shouldn't be on page`, () => {
+        result.setState(() => ({
+            edit:   true,
+            remove: false
+        }));
+        result.setProps({
+            update: () => true
+        });
+        result.find('.save').simulate('click');
+
+        expect(result.find('.save')).toHaveLength(0);
     });
 });
